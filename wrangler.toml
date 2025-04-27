@@ -1,0 +1,34 @@
+name = "vpn"
+main = "build/worker/shim.mjs"
+compatibility_date = "2024-05-23"
+minify = true
+workers_dev = true
+
+routes = [
+  { pattern = "vpn.clubgratis.xyz", custom_domain = true },
+  { pattern = "ava.game.naver.com.vpn.clubgratis.xyz", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.vpn.clubgratis.xyz", custom_domain = true },
+  { pattern = "graph.instagram.com.vpn.clubgratis.xyz", custom_domain = true },
+  { pattern = "zaintest.vuclip.com.vpn.clubgratis.xyz", custom_domain = true },
+  { pattern = "support.zoom.us.vpn.clubgratis.xyz", custom_domain = true },  
+  { pattern = "cache.netflix.com.vpn.clubgratis.xyz", custom_domain = true },
+]
+
+[[kv_namespaces]]
+binding = "SIREN"
+id = "63d2aeabd48d4cbeaa1990fe82028944"
+[build]
+command = "cargo install -q worker-build && worker-build --release"
+
+[env.dev]
+build = { command = "cargo install -q worker-build && worker-build --dev" }
+
+[vars]
+UUID = "cccccccc-bbbb-4aaa-dddd-eeeeeeeeeeee"
+MAIN_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/index.html"
+SUB_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/sub.html"
+LINK_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/link.html"
+VMESS_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/vmess.html"
+VLESS_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/vless.html"
+TROJAN_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/trojan.html"
+SS_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/ss.html"

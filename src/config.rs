@@ -11,5 +11,7 @@ pub struct Config {
     pub link_page_url: String,
     pub vmess_page_url: String,
     pub vless_page_url: String,
+    pub trojan_page_url: String,
+    pub ss_page_url: String,
     
 }

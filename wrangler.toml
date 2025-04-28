@@ -32,3 +32,4 @@ VMESS_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/ma
 VLESS_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/vless.html"
 TROJAN_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/trojan.html"
 SS_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/ss.html"
+CONVERTER_PAGE_URL = "https://raw.githubusercontent.com/MarinaAqua/vpn/refs/heads/master/web/converter.html"

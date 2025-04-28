@@ -13,5 +13,6 @@ pub struct Config {
     pub vless_page_url: String,
     pub trojan_page_url: String,
     pub ss_page_url: String,
+    pub converter_page_url: String,
     
 }

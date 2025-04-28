@@ -52,8 +52,8 @@ async fn main(req: Request, env: Env, _: Context) -> Result<Response> {
         .on_async("/vmess", vmess)
         .on_async("/vless", vless)
         .on_async("/trojan", trojan)
-        .on_async("/ss", ss)
-        .on_async("/converter", converter)  // Changed to on_async
+        .on_async("/converter", converter)
+        .on_async("/ss", ss)  // Changed to on_async
         .on_async("/gratis/:proxyip", tunnel)
         .run(req, env)
         .await

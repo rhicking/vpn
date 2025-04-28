@@ -29,6 +29,7 @@ async fn main(req: Request, env: Env, _: Context) -> Result<Response> {
     let vless_page_url = env.var("VLESS_PAGE_URL").map(|x|x.to_string()).unwrap();
     let trojan_page_url = env.var("TROJAN_PAGE_URL").map(|x|x.to_string()).unwrap();
     let ss_page_url = env.var("SS_PAGE_URL").map(|x|x.to_string()).unwrap();
+    let converter_page_url = env.var("CONVERTER_PAGE_URL").map(|x|x.to_string()).unwrap();
     let config = Config { 
         uuid, 
         host: host.clone(), 
@@ -40,7 +41,8 @@ async fn main(req: Request, env: Env, _: Context) -> Result<Response> {
         vmess_page_url,
         vless_page_url,
         trojan_page_url,
-        ss_page_url
+        ss_page_url,
+        converter_page_url
     };
 
     Router::with_data(config)
@@ -50,7 +52,8 @@ async fn main(req: Request, env: Env, _: Context) -> Result<Response> {
         .on_async("/vmess", vmess)
         .on_async("/vless", vless)
         .on_async("/trojan", trojan)
-        .on_async("/ss", ss)  // Changed to on_async
+        .on_async("/ss", ss)
+        .on_async("/converter", converter)  // Changed to on_async
         .on_async("/gratis/:proxyip", tunnel)
         .run(req, env)
         .await
@@ -89,6 +92,10 @@ async fn trojan(_: Request, cx: RouteContext<Config>) -> Result<Response> {
 
 async fn ss(_: Request, cx: RouteContext<Config>) -> Result<Response> {
     get_response_from_url(cx.data.ss_page_url).await
+}
+
+async fn converter(_: Request, cx: RouteContext<Config>) -> Result<Response> {
+    get_response_from_url(cx.data.converter_page_url).await
 }
 
 async fn tunnel(req: Request, mut cx: RouteContext<Config>) -> Result<Response> {

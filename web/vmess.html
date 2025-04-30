@@ -890,7 +890,12 @@
                             
                             <div>
                                 <label for="vmess-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="vmess-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="vmess-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                                <div id="vmess-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="vmess-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="vmess-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="vmess-wildcard" name="wildcard">
@@ -948,7 +953,12 @@
                             
                             <div>
                                 <label for="vless-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="vless-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="vless-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                     <!-- Options will be populated dynamically -->
+                                  </select>
+                                <div id="vless-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="vless-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="vless-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="vless-wildcard" name="wildcard">
@@ -1006,7 +1016,12 @@
                             
                             <div>
                                 <label for="trojan-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="trojan-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="trojan-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                                <div id="trojan-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="trojan-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="trojan-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="trojan-wildcard" name="wildcard">
@@ -1063,7 +1078,12 @@
                             
                             <div>
                                 <label for="ss-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="ss-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="ss-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                                <div id="ss-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="ss-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="ss-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="ss-wildcard" name="wildcard">
@@ -1221,8 +1241,7 @@ let proxyList = [];
 let filteredProxyList = [];
 let selectedProxy = null;
 const defaultProxyUrl = 'https://raw.githubusercontent.com/MarinaAqua/ProxyIP/refs/heads/main/all.txt';
-// Change from:
-// const serverDomain = 'clubgratis.xyz';
+
 
 // To:
 const serverDomains = ['clubgratis.xyz', 'nic.wilcardcf.biz.id', 'vip.myxl.dpdns.org', 'kingsvless.biz.id'];
@@ -1230,6 +1249,23 @@ let selectedServerDomain = serverDomains[0]; // Default to first domain
 const defaultUUID = 'cccccccc-bbbb-4aaa-dddd-eeeeeeeeeeee';
 const itemsPerPage = 10;
 let currentPage = 1;
+
+const pathTemplate = '/gratis/{ip}-{port}';
+
+// Array of bug options for easy management
+const bugOptions = [
+    { value: '', label: 'Default' },
+    { value: 'ava.game.naver.com', label: 'ava.game.naver.com' },
+    { value: 'graph.instagram.com', label: 'graph.instagram.com' },
+    { value: 'quiz.int.vidio.com', label: 'quiz.int.vidio.com' },
+    { value: 'investor.fb.com', label: 'investor.fb.com' },
+    { value: 'cache.netflix.com', label: 'cache.netflix.com' },
+    { value: 'support.zoom.us', label: 'support.zoom.us' },
+    { value: 'zaintest.vuclip.com', label: 'zaintest.vuclip.com' },
+    { value: 'dl.cvs.freefiremobile.com', label: 'dl.cvs.freefiremobile.com' },
+    { value: 'www.udemy.com', label: 'www.udemy.com' },
+    { value: 'manual', label: 'Type Manual' }
+];
 
 // DOM elements
 const proxyListSection = document.getElementById('proxy-list-section');
@@ -1977,8 +2013,8 @@ async function selectProxy(index) {
     
     // Update form fields
     const baseAccountName = `${selectedProxy.country} - ${selectedProxy.provider}`;
-    const path = `/gratis/${selectedProxy.ip}-${selectedProxy.port}`;
-
+    const path = pathTemplate.replace('{ip}', selectedProxy.ip).replace('{port}', selectedProxy.port);
+    
     // Set the path values
     document.getElementById('vmess-path').value = path;
     document.getElementById('vless-path').value = path;

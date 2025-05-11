@@ -9,6 +9,7 @@ pub struct Config {
     pub main_page_url: String,
     pub sub_page_url: String,
     pub link_page_url: String,
+    pub checkip_page_url: String,
     pub vmess_page_url: String,
     pub vless_page_url: String,
     pub trojan_page_url: String,

@@ -25,6 +25,7 @@ async fn main(req: Request, env: Env, _: Context) -> Result<Response> {
     let main_page_url = env.var("MAIN_PAGE_URL").map(|x|x.to_string()).unwrap();
     let sub_page_url = env.var("SUB_PAGE_URL").map(|x|x.to_string()).unwrap();
     let link_page_url = env.var("LINK_PAGE_URL").map(|x|x.to_string()).unwrap();
+    let checkip_page_url = env.var("CHECKIP_PAGE_URL").map(|x|x.to_string()).unwrap();
     let vmess_page_url = env.var("VMESS_PAGE_URL").map(|x|x.to_string()).unwrap();
     let vless_page_url = env.var("VLESS_PAGE_URL").map(|x|x.to_string()).unwrap();
     let trojan_page_url = env.var("TROJAN_PAGE_URL").map(|x|x.to_string()).unwrap();
@@ -38,6 +39,7 @@ async fn main(req: Request, env: Env, _: Context) -> Result<Response> {
         main_page_url, 
         sub_page_url,
         link_page_url,
+        checkip_page_url,
         vmess_page_url,
         vless_page_url,
         trojan_page_url,
@@ -49,6 +51,7 @@ async fn main(req: Request, env: Env, _: Context) -> Result<Response> {
         .on_async("/", fe)
         .on_async("/sub", sub)
         .on_async("/link", link)
+        .on_async("/checkip", checkip)
         .on_async("/vmess", vmess)
         .on_async("/vless", vless)
         .on_async("/trojan", trojan)
@@ -76,6 +79,10 @@ async fn sub(_: Request, cx: RouteContext<Config>) -> Result<Response> {
 // Changed to fetch from URL like fe and sub
 async fn link(_: Request, cx: RouteContext<Config>) -> Result<Response> {
     get_response_from_url(cx.data.link_page_url).await
+}
+
+async fn checkip(_: Request, cx: RouteContext<Config>) -> Result<Response> {
+    get_response_from_url(cx.data.checkip_page_url).await
 }
 
 async fn vmess(_: Request, cx: RouteContext<Config>) -> Result<Response> {
